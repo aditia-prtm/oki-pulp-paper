@@ -36,7 +36,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <header className="fixed font-montserrat top-0 left-0 right-0 z-50 transition-all duration-300">
       {/* Top Red Utility Bar (Matching OKI & Corporate Brand Style) */}
       <div 
         className={`bg-[#D91A2A] text-white text-xs font-medium tracking-wide transition-all duration-300 ${
