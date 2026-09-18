@@ -5,37 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { Calendar, ArrowRight, ArrowUpRight, Newspaper } from "lucide-react";
 import { motion } from "framer-motion";
+import { newsData } from "@/data";
 
 export default function NewsSection() {
-  const newsItems = [
-    {
-      id: 1,
-      date: "12 SEPTEMBER 2026",
-      category: "KORPORAT",
-      title: "PT OKI Pulp & Paper Raih Penghargaan Efisiensi Energi Industri Hijau Nasional 2026",
-      snippet: "Pengakuan atas dedikasi penerapan sistem recovery boiler sirkular dan pengurangan intensitas emisi karbon secara konsisten.",
-      image: "/images/hero/news1.jpg",
-      href: "#",
-    },
-    {
-      id: 2,
-      date: "28 AGUSTUS 2026",
-      category: "KOMUNITAS & DMPA",
-      title: "Pemberdayaan Program Petani Binaan Desa Makmur Peduli Api Capai Hasil Panen Rekor",
-      snippet: "Inisiatif kemitraan agroforestri berkelanjutan meningkatkan kesejahteraan ratusan kepala keluarga di sekitar area konsesi.",
-      image: "/images/hero/news2.jpg",
-      href: "#",
-    },
-    {
-      id: 3,
-      date: "15 AGUSTUS 2026",
-      category: "INOVASI PRODUK",
-      title: "Ekspansi Jalur Produksi Tisu Higienis Berkecepatan Tinggi untuk Permintaan Global",
-      snippet: "Peningkatan kapasitas mesin converting modern memenuhi standar internasional pasar Asia Timur dan Amerika Utara.",
-      image: "/images/products/tissue-paper.jpg",
-      href: "#",
-    }
-  ];
+  const { tag, title, viewAllText, viewAllHref, readMoreText, articles } = newsData;
 
   return (
     <section id="news" className="py-20 lg:py-28 bg-[#FCFCFA] border-b border-neutral-200/80">
@@ -47,26 +20,26 @@ export default function NewsSection() {
             <div className="flex items-center gap-2">
               <span className="w-6 h-[3px] bg-[#D91A2A]" />
               <span className="text-xs font-bold uppercase tracking-widest text-[#D91A2A]">
-                Pusat Informasi & Media
+                {tag}
               </span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold text-[#1E232A] tracking-tight">
-              Kabar & Siaran Pers Terkini
+              {title}
             </h2>
           </div>
 
           <Link
-            href="#news"
+            href={viewAllHref}
             className="mt-4 md:mt-0 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-neutral-800 hover:text-[#D91A2A] transition-colors"
           >
-            <span>Lihat Semua Berita</span>
+            <span>{viewAllText}</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
         {/* News Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {newsItems.map((news, idx) => (
+          {articles.map((news, idx) => (
             <motion.article
               key={news.id}
               initial={{ opacity: 0, y: 20 }}
@@ -105,7 +78,7 @@ export default function NewsSection() {
 
                 <div className="pt-2">
                   <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#D91A2A] group-hover:underline">
-                    <span>Baca Artikel</span>
+                    <span>{readMoreText}</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </span>
                 </div>

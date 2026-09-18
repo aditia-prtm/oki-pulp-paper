@@ -5,168 +5,47 @@ import Image from "next/image";
 import { ArrowRight, CheckCircle2, ChevronRight, X, ExternalLink, Sparkles, Box, FileText, Layers, ShieldCheck } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-interface Product {
-  id: string;
-  name: string;
-  category: string;
-  tagline: string;
-  description: string;
-  image: string;
-  features: string[];
-  specs: { label: string; value: string }[];
-  applications: string[];
-  certifications: string[];
-}
-
-const PRODUCTS_DATA: Product[] = [
-  {
-    id: "bhkp-pulp",
-    name: "Bleached Hardwood Kraft Pulp (BHKP)",
-    category: "RAW FIBER & PULP",
-    tagline: "Serat pulp kayu keras berkualitas tinggi dengan derajat keputihan optimal dan formasi serat homogen.",
-    description: "Diproduksi dari 100% serat kayu tanaman industri terbarukan (Acacia & Eucalyptus) yang dikelola secara lestari. Memiliki daya serap, formasi lembaran, dan kekuatan tarik superior untuk bahan baku kertas cetak serta tisu kelas dunia.",
-    image: "/images/products/bhkp-pulp.jpg",
-    features: [
-      "100% Plantation Fiber (Acacia mangium & Eucalyptus)",
-      "Derajat keputihan (Brightness) > 89% ISO",
-      "Kandungan resin rendah & drainase serat optimal",
-      "Proses pemutihan ramah lingkungan Elemental Chlorine Free (ECF)"
-    ],
-    specs: [
-      { label: "Kapasitas Produksi", value: "2.800.000 Ton / Tahun" },
-      { label: "Brightness", value: "88% - 90% ISO" },
-      { label: "Moisture Content", value: "10% ± 1.5%" },
-      { label: "Dirt Count", value: "≤ 2.0 mm²/m²" }
-    ],
-    applications: [
-      "Kertas cetak dan tulis premium (Woodfree Uncoated)",
-      "Produk tisu higienis & sanitary wipes",
-      "Kertas label dan kemasan fleksibel",
-      "Specialty coated fine paper"
-    ],
-    certifications: ["PEFC CoC", "SVLK Certified", "ISO 9001", "ISO 14001", "REACH Compliant"]
-  },
-  {
-    id: "tissue-reels",
-    name: "Tissue Parent Reels & Jumbo Rolls",
-    category: "HYGIENE & CONVERTING",
-    tagline: "Gulungan tisu induk jumbo ultra-lembut dengan daya serap air tinggi untuk industri converting.",
-    description: "Dihasilkan melalui mesin tisu mutakhir berkecepatan tinggi dengan sistem pengeringan Yankee Cylinder tercanggih. Memberikan kombinasi sempurna antara kelembutan serat murni (virgin fiber), ketahanan basah, dan efisiensi konversi optimal.",
-    image: "/images/products/tissue-paper.jpg",
-    features: [
-      "100% Virgin Wood Pulp bebas bahan kimia optik berlebih",
-      "Tekstur ultra-soft dengan kelembutan mikroskopis tinggi",
-      "Daya serap air dan minyak yang luar biasa",
-      "Gramatur konsisten dan kekuatan tarik merata"
-    ],
-    specs: [
-      { label: "Kapasitas Tahunan", value: "500.000 Ton / Tahun" },
-      { label: "Rentang Gramatur", value: "12.5 - 45 gsm" },
-      { label: "Lebar Gulungan", value: "Hingga 5.600 mm" },
-      { label: "Diameter Reel", value: "Hingga 2.500 mm" }
-    ],
-    applications: [
-      "Facial Tissue & Pocket Tissue",
-      "Bathroom Toilet Tissue (1-ply & 2-ply)",
-      "Kitchen Towel & Industrial Hand Towel",
-      "Napkin & Tableware Tissue"
-    ],
-    certifications: ["FDA Food Contact", "ISEGA Certified", "PEFC", "ISO 22000 (HACCP)", "Halal MUI"]
-  },
-  {
-    id: "packaging-fbb",
-    name: "Eco-Packaging & Folding Box Board (FBB)",
-    category: "PACKAGING SOLUTIONS",
-    tagline: "Karton kemasan premium berlapis ganda ramah lingkungan untuk perlindungan dan cetak grafis beresolusi tinggi.",
-    description: "Solusi kemasan karton berkelanjutan (Folding Box Board / White Back) dengan kekakuan (stiffness) tinggi dan permukaan halus sempurna untuk aplikasi foil stamping, emboss, dan cetak warna kemasan makanan dan farmasi modern.",
-    image: "/images/products/packaging-fbb.jpg",
-    features: [
-      "Struktur multi-ply untuk kekuatan tekan dan kekakuan maksimal",
-      "Lapisan coating ganda untuk reproduksi cetak warna tajam",
-      "Food-grade dan aman untuk kontak makanan langsung",
-      "100% dapat didaur ulang dan biodegradable"
-    ],
-    specs: [
-      { label: "Ketebalan / Caliper", value: "280 - 650 µm" },
-      { label: "Gramatur", value: "190 - 400 gsm" },
-      { label: "Roughness (PPS)", value: "≤ 1.5 µm" },
-      { label: "Gloss 75°", value: "> 45%" }
-    ],
-    applications: [
-      "Kemasan farmasi & kosmetik mewah",
-      "Kotak makanan higienis (Food & Beverage Packaging)",
-      "Kemasan produk elektronik & ritel konsumen",
-      "Cover buku dan display promosi premium"
-    ],
-    certifications: ["FDA Approved", "BfR XXXVI Recommendation", "PEFC", "ISO 9001", "RoHS"]
-  },
-  {
-    id: "specialty-paper",
-    name: "Specialty & High-Brightness Printing Paper",
-    category: "PRINTING & PUBLISHING",
-    tagline: "Kertas cetak dan tulis dengan opasitas prima, kontras tajam, dan performa tinggi pada mesin percetakan modern.",
-    description: "Diformulasikan khusus untuk percetakan offset komersial, buku teks, dan kertas dokumen berkekuatan tinggi. Memberikan kejernihan teks, presisi warna luar biasa, dan tidak tembus tinta pada kedua sisi kertas.",
-    image: "/images/products/specialty-paper.jpg",
-    features: [
-      "Formasi serat rapat dengan opasitas tinggi (tidak tembus pandang)",
-      "Permukaan halus (Smoothness) untuk efisiensi transfer tinta cetak",
-      "Stabilitas dimensi sangat tinggi untuk pencetakan multi-warna cepat",
-      "Bebas asam (Acid-free) untuk umur simpan arsip jangka panjang"
-    ],
-    specs: [
-      { label: "Gramatur Kertas", value: "60, 70, 80, 100 gsm" },
-      { label: "Brightness", value: "98% - 104% ISO" },
-      { label: "Opasitas", value: "> 94%" },
-      { label: "Format", value: "Sheets (Lembaran) & Rolls (Gulungan)" }
-    ],
-    applications: [
-      "Buku literatur, ensiklopedia & novel berkualitas",
-      "Majalah, brosur korporat, dan company profile",
-      "Kertas formulir bisnis & continuous form",
-      "Amplop, map, dan security paper stationery"
-    ],
-    certifications: ["ISO 9706 (Permanent Paper)", "PEFC", "SVLK", "ISO 14001"]
-  }
-];
+import { productsData, Product } from "@/data";
 
 export default function ProductCards() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const { tag, title, description, ctaText, ctaHref, products } = productsData;
 
   return (
     <section id="products" className="py-20 lg:py-28 bg-[#F4F5F0] border-b border-neutral-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header (Inspired by Merdeka Copper Gold Kabar Section Header Style) */}
+        {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 lg:mb-16">
           <div className="space-y-3 max-w-2xl">
             <div className="flex items-center gap-2">
               <span className="w-6 h-[3px] bg-[#D91A2A]" />
               <span className="text-xs font-bold uppercase tracking-widest text-[#D91A2A]">
-                Portofolio Produk Unggulan
+                {tag}
               </span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold text-[#1E232A] tracking-tight">
-              Solusi Serat Kayu & Kertas Berkelanjutan
+              {title}
             </h2>
             <p className="text-sm sm:text-base text-neutral-600">
-              Menghasilkan produk pulp dan kertas berkualitas tinggi dengan teknologi modern terintegrasi untuk memenuhi kebutuhan industri global.
+              {description}
             </p>
           </div>
 
           <div className="mt-6 md:mt-0">
             <a
-              href="#contact"
+              href={ctaHref}
               className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#D91A2A] hover:text-[#B31221] group pb-1 border-b-2 border-[#D91A2A]/40 hover:border-[#D91A2A] transition-all"
             >
-              <span>Konsultasi Kebutuhan Industri</span>
+              <span>{ctaText}</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
           </div>
         </div>
 
-        {/* 4 Product Cards Grid (Replacing Copper Gold 4 News Cards) */}
+        {/* 4 Product Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          {PRODUCTS_DATA.map((product, idx) => (
+          {products.map((product, idx) => (
             <motion.div
               key={product.id}
               initial={{ opacity: 0, y: 24 }}

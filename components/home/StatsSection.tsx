@@ -3,38 +3,19 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Factory, Globe2, Zap, Users, TrendingUp, Trees } from "lucide-react";
+import { statsData } from "@/data";
+
+const iconMap = {
+  Factory,
+  Globe2,
+  Zap,
+  Users,
+  TrendingUp,
+  Trees,
+};
 
 export default function StatsSection() {
-  const stats = [
-    {
-      icon: Factory,
-      value: "2,8 Juta",
-      unit: "Ton / Tahun",
-      label: "Kapasitas Pulp (BHKP)",
-      desc: "Salah satu lini tunggal pabrik bubur kertas terbesar & paling efisien di dunia."
-    },
-    {
-      icon: TrendingUp,
-      value: "500.000",
-      unit: "Ton / Tahun",
-      label: "Kapasitas Produksi Tisu",
-      desc: "Memasok pasar domestik dan ekspor dengan teknologi converting berkecepatan tinggi."
-    },
-    {
-      icon: Zap,
-      value: "100%",
-      unit: "Energi Mandiri",
-      label: "Energi Bersih Terbarukan",
-      desc: "Pembangkit listrik berbasis biomassa kulit kayu & black liquor tanpa bahan bakar fosil."
-    },
-    {
-      icon: Globe2,
-      value: "50+",
-      unit: "Negara Tujuan",
-      label: "Jangkauan Ekspor Global",
-      desc: "Didistribusikan ke Asia Pasifik, Eropa, Timur Tengah, Amerika Utara & Afrika."
-    },
-  ];
+  const { tag, title, description, stats } = statsData;
 
   return (
     <section id="operations" className="py-20 bg-[#12161A] text-white relative overflow-hidden">
@@ -48,20 +29,20 @@ export default function StatsSection() {
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white text-xs font-bold uppercase tracking-wider backdrop-blur-sm border border-white/15">
             <Factory className="w-3.5 h-3.5 text-[#FF4D5E]" />
-            <span>Skala Operasional & Keunggulan Industri</span>
+            <span>{tag}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
-            Kekuatan Produksi Terintegrasi Skala Global
+            {title}
           </h2>
           <p className="text-sm sm:text-base text-neutral-400">
-            Fasilitas mill terpadu di Sungai Baung, Ogan Komering Ilir, memadukan inovasi teknik mutakhir dengan sirkularitas energi hijau.
+            {description}
           </p>
         </div>
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat, idx) => {
-            const Icon = stat.icon;
+            const Icon = iconMap[stat.iconName] || Factory;
             return (
               <motion.div
                 key={idx}

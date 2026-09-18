@@ -14,8 +14,11 @@ import {
   Award,
   ChevronRight 
 } from "lucide-react";
+import { siteConfig } from "@/data";
 
 export default function Footer() {
+  const { logo, contact, affiliations, certifications, footerLinks } = siteConfig;
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -31,8 +34,8 @@ export default function Footer() {
           <div className="lg:col-span-4 space-y-6">
             <div className="w-56 h-12 relative bg-white/95 rounded-lg p-2.5">
               <Image
-                src="/images/logo/logo_OKI.svg"
-                alt="PT OKI Pulp & Paper Mills"
+                src={logo.src}
+                alt={logo.alt}
                 fill
                 className="object-contain object-left px-2"
               />
@@ -44,11 +47,11 @@ export default function Footer() {
 
             <div className="space-y-2 pt-1">
               <div className="text-[11px] font-bold uppercase tracking-wider text-neutral-400">
-                Afiliasi Korporasi
+                {affiliations.title}
               </div>
               <div className="text-xs text-neutral-300 font-semibold flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-[#D91A2A]" />
-                <span>Anggota dari APP Group (Asia Pulp & Paper)</span>
+                <span>{affiliations.name}</span>
               </div>
             </div>
           </div>
@@ -59,11 +62,11 @@ export default function Footer() {
               Navigasi Cepat
             </h4>
             <ul className="space-y-2.5 text-xs text-neutral-400">
-              {["Beranda", "Tentang Kami", "Visi & Misi", "Struktur Manajemen", "Tata Kelola Perusahaan", "Karir & Rekrutmen"].map((item, idx) => (
+              {footerLinks.quickLinks.map((item, idx) => (
                 <li key={idx}>
-                  <a href="#about" className="hover:text-white transition-colors flex items-center gap-1.5">
+                  <a href={item.href} className="hover:text-white transition-colors flex items-center gap-1.5">
                     <ChevronRight className="w-3 h-3 text-[#D91A2A]" />
-                    <span>{item}</span>
+                    <span>{item.name}</span>
                   </a>
                 </li>
               ))}
@@ -76,18 +79,11 @@ export default function Footer() {
               Produk & Solusi
             </h4>
             <ul className="space-y-2.5 text-xs text-neutral-400">
-              {[
-                "BHKP Pulp Kayu Keras", 
-                "Tissue Jumbo Rolls", 
-                "Folding Box Board (FBB)", 
-                "Specialty Paper", 
-                "Kebijakan Hutan (FCP)", 
-                "Sertifikasi PEFC & SVLK"
-              ].map((item, idx) => (
+              {footerLinks.productLinks.map((item, idx) => (
                 <li key={idx}>
-                  <a href="#products" className="hover:text-white transition-colors flex items-center gap-1.5">
+                  <a href={item.href} className="hover:text-white transition-colors flex items-center gap-1.5">
                     <ChevronRight className="w-3 h-3 text-[#D91A2A]" />
-                    <span>{item}</span>
+                    <span>{item.name}</span>
                   </a>
                 </li>
               ))}
@@ -104,27 +100,27 @@ export default function Footer() {
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-[#D91A2A] shrink-0 mt-0.5" />
                 <div>
-                  <span className="font-semibold text-white block">Mill Site (Pabrik):</span>
-                  <span>Desa Bukit Batu, Kec. Air Sugihan, Kab. Ogan Komering Ilir, Sumatera Selatan 30656, Indonesia</span>
+                  <span className="font-semibold text-white block">{contact.millSite.title}</span>
+                  <span>{contact.millSite.address}</span>
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-[#D91A2A] shrink-0 mt-0.5" />
                 <div>
-                  <span className="font-semibold text-white block">Head Office:</span>
-                  <span>Sinar Mas Land Plaza, Jl. M.H. Thamrin No.51, Jakarta Pusat 10350, Indonesia</span>
+                  <span className="font-semibold text-white block">{contact.headOffice.title}</span>
+                  <span>{contact.headOffice.address}</span>
                 </div>
               </div>
 
               <div className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-[#D91A2A] shrink-0" />
-                <span>+62 711 753 8888 / +62 21 2965 0800</span>
+                <span>{contact.phones.join(" / ")}</span>
               </div>
 
               <div className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-[#D91A2A] shrink-0" />
-                <span>info@okipulpandpaper.com</span>
+                <span>{contact.email}</span>
               </div>
             </div>
           </div>
@@ -138,10 +134,11 @@ export default function Footer() {
               <ShieldCheck className="w-4 h-4 text-emerald-400" />
               Sertifikasi & Kepatuhan:
             </span>
-            <span className="px-2 py-0.5 rounded bg-white/10 text-[11px]">PEFC CoC</span>
-            <span className="px-2 py-0.5 rounded bg-white/10 text-[11px]">SVLK Kayu Lestari</span>
-            <span className="px-2 py-0.5 rounded bg-white/10 text-[11px]">ISO 9001 / 14001 / 50001</span>
-            <span className="px-2 py-0.5 rounded bg-white/10 text-[11px]">PROPER Hijau</span>
+            {certifications.map((cert, idx) => (
+              <span key={idx} className="px-2 py-0.5 rounded bg-white/10 text-[11px]">
+                {cert}
+              </span>
+            ))}
           </div>
 
           <div className="flex items-center gap-3">
@@ -159,12 +156,11 @@ export default function Footer() {
           </div>
 
           <div className="flex items-center gap-6">
-            <a href="#privacy" className="hover:text-neutral-300 transition-colors">
-              Kebijakan Privasi
-            </a>
-            <a href="#terms" className="hover:text-neutral-300 transition-colors">
-              Syarat & Ketentuan
-            </a>
+            {footerLinks.legalLinks.map((legal, idx) => (
+              <a key={idx} href={legal.href} className="hover:text-neutral-300 transition-colors">
+                {legal.name}
+              </a>
+            ))}
             <button
               onClick={scrollToTop}
               className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#D91A2A] text-white flex items-center justify-center transition-all duration-300"

@@ -5,30 +5,25 @@ import Image from "next/image";
 import Link from "next/link";
 import { Leaf, Droplets, Sun, Trees, ArrowRight, CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { sustainabilityData } from "@/data";
+
+const iconMap = {
+  Trees,
+  Sun,
+  Droplets,
+  Leaf,
+};
 
 export default function SustainabilitySection() {
-  const pillars = [
-    {
-      icon: Trees,
-      title: "Kebijakan Konservasi Hutan (FCP)",
-      desc: "Proteksi penuh terhadap hutan bernilai konservasi tinggi (HCV) dan stok karbon tinggi (HCS) dengan nol deforestasi dalam rantai pasok serat.",
-    },
-    {
-      icon: Sun,
-      title: "Transisi Energi Hijau & Net Zero",
-      desc: "Memanfaatkan 100% residu biomassa kayu dan recovery boiler canggih untuk menghasilkan listrik mandiri tanpa bahan bakar fosil batu bara.",
-    },
-    {
-      icon: Droplets,
-      title: "Pengelolaan & Daur Ulang Air Tertutup",
-      desc: "Fasilitas pengolahan air limbah biologis modern yang memenuhi standar baku mutu ketat dengan sirkulasi tertutup untuk meminimalkan konsumsi air tawar.",
-    },
-    {
-      icon: Leaf,
-      title: "Pemberdayaan Desa Makmur Peduli Api (DMPA)",
-      desc: "Membina ribuan keluarga petani di sekitar konsesi melalui agroforestri, hortikultura, dan pencegahan kebakaran hutan berbasis masyarakat.",
-    }
-  ];
+  const { 
+    tag, 
+    title, 
+    description, 
+    heroImage, 
+    floatingMetric, 
+    pillars, 
+    reportCta 
+  } = sustainabilityData;
 
   return (
     <section id="sustainability" className="py-20 lg:py-28 bg-[#FCFCFA] border-b border-neutral-200/80 overflow-hidden">
@@ -46,8 +41,8 @@ export default function SustainabilitySection() {
           >
             <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
               <Image
-                src="/images/hero/sustainability-hero.jpg"
-                alt="OKI Sustainable Forestry & Mill"
+                src={heroImage.src}
+                alt={heroImage.alt}
                 fill
                 className="object-cover"
               />
@@ -55,10 +50,10 @@ export default function SustainabilitySection() {
               
               <div className="absolute bottom-6 left-6 right-6 text-white">
                 <span className="px-3 py-1 bg-emerald-600 text-white text-[11px] font-bold uppercase tracking-wider rounded-md mb-2 inline-block shadow-md">
-                  Inisiatif Hijau APP Group
+                  {heroImage.badge}
                 </span>
                 <p className="text-sm sm:text-base font-semibold text-white/95">
-                  Menjaga Keseimbangan Ekosistem & Pertumbuhan Ekonomi Berkelanjutan
+                  {heroImage.caption}
                 </p>
               </div>
             </div>
@@ -69,8 +64,8 @@ export default function SustainabilitySection() {
                 <Trees className="w-6 h-6" />
               </div>
               <div>
-                <div className="text-xl font-bold text-neutral-900">100% Lolos</div>
-                <div className="text-xs text-neutral-500">Uji Legalitas Kayu & Sertifikasi Lestari PEFC / SVLK</div>
+                <div className="text-xl font-bold text-neutral-900">{floatingMetric.value}</div>
+                <div className="text-xs text-neutral-500">{floatingMetric.label}</div>
               </div>
             </div>
           </motion.div>
@@ -86,22 +81,22 @@ export default function SustainabilitySection() {
             <div className="flex items-center gap-2">
               <span className="w-6 h-[3px] bg-emerald-600" />
               <span className="text-xs font-bold uppercase tracking-widest text-emerald-700">
-                Komitmen Keberlanjutan & ESG
+                {tag}
               </span>
             </div>
 
             <h2 className="text-3xl sm:text-4xl font-bold text-[#1E232A] tracking-tight leading-tight">
-              Membangun Masa Depan Rendah Karbon Bersama Alam
+              {title}
             </h2>
 
             <p className="text-sm sm:text-base text-neutral-600 leading-relaxed">
-              Keberlanjutan bukan sekadar target operasional bagi PT OKI Pulp & Paper Mills, melainkan fondasi integritas dalam setiap lembar serat dan kertas yang kami ciptakan.
+              {description}
             </p>
 
             {/* Pillars list */}
             <div className="space-y-4 pt-2">
               {pillars.map((item, idx) => {
-                const Icon = item.icon;
+                const Icon = iconMap[item.iconName] || Leaf;
                 return (
                   <div key={idx} className="flex items-start gap-4 p-3.5 rounded-xl bg-neutral-50 hover:bg-white border border-transparent hover:border-neutral-200 transition-all">
                     <div className="w-9 h-9 rounded-lg bg-emerald-100/60 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
@@ -122,10 +117,10 @@ export default function SustainabilitySection() {
 
             <div className="pt-2">
               <Link
-                href="#sustainability"
+                href={reportCta.href}
                 className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-700 hover:text-emerald-900 group"
               >
-                <span>Unduh Laporan Keberlanjutan ESG Terbaru</span>
+                <span>{reportCta.label}</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>

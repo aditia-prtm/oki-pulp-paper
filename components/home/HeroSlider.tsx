@@ -6,47 +6,7 @@ import Link from "next/link";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { ChevronLeft, ChevronRight, ArrowRight, ArrowUpRight, Calendar, Sparkles } from "lucide-react";
 
-interface HeroSlide {
-  id: number;
-  date: string;
-  category: string;
-  title: string;
-  subtitle: string;
-  image: string;
-  link: string;
-}
-
-const HERO_SLIDES: HeroSlide[] = [
-  {
-    id: 1,
-    date: "18 SEPTEMBER 2026",
-    category: "OPERASIONAL & TEKNOLOGI",
-    title: "Grup OKI Pulp & Paper Mengukuhkan Standar Baru Pabrik Pulp & Tisu Terintegrasi Berkelanjutan di Asia Pasifik",
-    subtitle: "Menerapkan teknologi mutakhir dan energi terbarukan mandiri 100% untuk memasok serat bernilai tinggi ke pasar global.",
-    image: "/images/hero/news1.jpg",
-    link: "#about",
-  },
-  {
-    id: 2,
-    date: "28 AGUSTUS 2026",
-    category: "KEBERLANJUTAN & LINGKUNGAN",
-    title: "Komitmen Nol Deforestasi dan Transisi Rendah Karbon Menuju Lanskap Industri Hijau Berkelanjutan",
-    subtitle: "Melestarikan koridor keanekaragaman hayati dan memberdayakan komunitas desa di sekitar konsesi Sungai Baung.",
-    image: "/images/hero/sustainability-hero.jpg",
-    link: "#sustainability",
-  },
-  {
-    id: 3,
-    date: "20 AGUSTUS 2026",
-    category: "TANGGAP DARURAT & SOSIAL",
-    title: "Tim Tanggap Darurat & Relawan Kemanusiaan OKI Sigap Terjun untuk Penanggulangan Bencana dan Komunitas",
-    subtitle: "Kolaborasi intensif bersama pemangku kepentingan dalam penanganan kebakaran hutan dan bantuan kemanusiaan.",
-    image: "/images/hero/news2.jpg",
-    link: "#news",
-  },
-];
-
-const AUTO_PLAY_INTERVAL = 7000; // 7 seconds per slide
+import { HERO_SLIDES, HERO_CONFIG, HeroSlide } from "@/data";
 
 export default function HeroSlider() {
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -63,7 +23,7 @@ export default function HeroSlider() {
     if (isPaused) return;
     const timer = setInterval(() => {
       setCurrentIdx((prev) => (prev + 1) % HERO_SLIDES.length);
-    }, AUTO_PLAY_INTERVAL);
+    }, HERO_CONFIG.autoPlayInterval);
 
     return () => clearInterval(timer);
   }, [isPaused, currentIdx]);
@@ -143,12 +103,8 @@ export default function HeroSlider() {
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="space-y-4"
             >
-              {/* Category & Date Badge */}
+              {/* Date Badge */}
               <div className="flex items-center gap-3 flex-wrap">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-[#D91A2A] text-white shadow-sm">
-                  <Sparkles className="w-3 h-3" />
-                  {activeSlide.category}
-                </span>
                 <span className="flex items-center gap-1.5 text-xs font-semibold tracking-wider text-white/80 uppercase">
                   <Calendar className="w-3.5 h-3.5 text-[#FF4D5E]" />
                   {activeSlide.date}
@@ -205,7 +161,7 @@ export default function HeroSlider() {
                     <motion.div
                       initial={{ width: "0%" }}
                       animate={{ width: "100%" }}
-                      transition={{ duration: AUTO_PLAY_INTERVAL / 1000, ease: "linear" }}
+                      transition={{ duration: HERO_CONFIG.autoPlayInterval / 1000, ease: "linear" }}
                       className="absolute top-0 left-0 bottom-0 bg-white"
                     />
                   )}

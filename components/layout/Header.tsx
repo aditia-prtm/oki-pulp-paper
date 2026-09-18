@@ -13,12 +13,15 @@ import {
   ArrowUpRight,
   ChevronRight
 } from "lucide-react";
+import { siteConfig } from "@/data";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const [currentLang, setCurrentLang] = useState<"ID" | "EN">("ID");
+
+  const { navigation, topBar, logo } = siteConfig;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,28 +35,6 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
-    { name: "Beranda", href: "#hero" },
-    { 
-      name: "Perusahaan", 
-      href: "#about",
-      dropdown: ["Tentang OKI", "Visi & Misi", "Struktur Manajemen", "Tata Kelola", "Sertifikasi"] 
-    },
-    { 
-      name: "Produk & Solusi", 
-      href: "#products",
-      dropdown: ["Bleached Hardwood Kraft Pulp (BHKP)", "Tissue Paper Reels", "Packaging & FBB", "Specialty Paper"] 
-    },
-    { 
-      name: "Keberlanjutan", 
-      href: "#sustainability",
-      dropdown: ["Komitmen ESG", "Konservasi Hutan", "Energi Bersih", "Pemberdayaan Masyarakat"] 
-    },
-    { name: "Operasional", href: "#operations" },
-    { name: "Kabar & Media", href: "#news" },
-    { name: "Karir", href: "#careers" },
-  ];
-
   return (
     <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
       {/* Top Red Utility Bar (Matching OKI & Corporate Brand Style) */}
@@ -65,7 +46,7 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           <div className="flex items-center space-x-6">
             <span className="hidden sm:inline-block font-semibold uppercase tracking-wider text-[11px] text-white/90">
-              PT OKI Pulp & Paper Mills — APP Group
+              {topBar.announcement}
             </span>
           </div>
           
@@ -75,7 +56,7 @@ export default function Header() {
               className="hover:text-white/80 transition-colors uppercase tracking-wider text-[11px] flex items-center gap-1.5"
             >
               <Globe className="w-3.5 h-3.5" />
-              <span>Jaringan Global</span>
+              <span>{topBar.globalNetworkText}</span>
             </a>
             
             <span className="text-white/40">|</span>
@@ -85,7 +66,7 @@ export default function Header() {
               className="hover:text-white/80 transition-colors uppercase tracking-wider text-[11px] flex items-center gap-1.5"
             >
               <PhoneCall className="w-3.5 h-3.5" />
-              <span>Hubungi Kami</span>
+              <span>{topBar.contactText}</span>
             </a>
             
             <span className="text-white/40">|</span>
@@ -137,8 +118,8 @@ export default function Header() {
           <Link href="/" className="flex items-center group relative z-10">
             <div className="relative w-48 sm:w-56 h-10 transition-transform group-hover:scale-[1.02]">
               <Image
-                src="/images/logo/logo_OKI.svg"
-                alt="PT OKI Pulp & Paper Logo"
+                src={logo.src}
+                alt={logo.alt}
                 fill
                 priority
                 className="object-contain object-left"
@@ -148,7 +129,7 @@ export default function Header() {
 
           {/* Desktop Nav Items */}
           <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2">
-            {navLinks.map((item, idx) => (
+            {navigation.map((item, idx) => (
               <div key={idx} className="relative group">
                 <Link
                   href={item.href}
@@ -222,7 +203,7 @@ export default function Header() {
       {mobileMenuOpen && (
         <div className="lg:hidden bg-white/98 border-b border-neutral-200 px-6 py-6 shadow-2xl animate-in slide-in-from-top duration-300 max-h-[85vh] overflow-y-auto">
           <div className="space-y-4">
-            {navLinks.map((item, idx) => (
+            {navigation.map((item, idx) => (
               <div key={idx} className="border-b border-neutral-100 pb-3">
                 <Link
                   href={item.href}
