@@ -200,8 +200,13 @@ export default function Header() {
       </div>
 
       {/* Mobile Menu Overlay */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden bg-white/98 border-b border-neutral-200 px-6 py-6 shadow-2xl animate-in slide-in-from-top duration-300 max-h-[85vh] overflow-y-auto">
+      <div 
+        className={`lg:hidden bg-white/98 border-b border-neutral-200 px-6 py-6 shadow-2xl max-h-[85vh] overflow-y-auto transition-all duration-300 ${
+          mobileMenuOpen 
+            ? 'translate-x-0 opacity-100 pointer-events-auto' 
+            : 'translate-x-full opacity-0 pointer-events-none'
+        }`}
+      >
           <div className="space-y-4">
             {navigation.map((item, idx) => (
               <div key={idx} className="border-b border-neutral-100 pb-3">
@@ -258,8 +263,7 @@ export default function Header() {
               </div>
             </div>
           </div>
-        </div>
-      )}
+      </div>
     </header>
   );
 }
