@@ -1,10 +1,3 @@
-/**
- * ==============================================================================
- * DATA HERO BANNER / SLIDER UTAMA
- * ==============================================================================
- * Ubah teks judul, tanggal, ringkasan, gambar latar, dan link tombol slide di sini.
- */
-
 export interface HeroSlide {
   id: number;
   date: string;
@@ -32,7 +25,7 @@ export const HERO_SLIDES: HeroSlide[] = [
     date: "28 AGUSTUS 2026",
     title: "Komitmen Nol Deforestasi dan Transisi Rendah Karbon Menuju Lanskap Industri Hijau Berkelanjutan",
     subtitle: "Melestarikan koridor keanekaragaman hayati dan memberdayakan komunitas desa di sekitar konsesi Sungai Baung.",
-    image: "/images/hero/oki.jpg",
+    image: "/images/hero/news2.jpg",
     link: "#sustainability",
   },
   {

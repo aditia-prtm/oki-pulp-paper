@@ -15,7 +15,7 @@ const iconMap = {
 };
 
 export default function StatsSection() {
-  const { tag, title, description, stats } = statsData;
+  const { title, description, stats } = statsData;
 
   return (
     <section id="operations" className="py-20 bg-[#12161A] text-white relative overflow-hidden">
@@ -27,10 +27,6 @@ export default function StatsSection() {
         
         {/* Section Title */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white text-xs font-bold uppercase tracking-wider backdrop-blur-sm border border-white/15">
-            <Factory className="w-3.5 h-3.5 text-[#FF4D5E]" />
-            <span>{tag}</span>
-          </div>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
             {title}
           </h2>

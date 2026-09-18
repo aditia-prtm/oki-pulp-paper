@@ -14,14 +14,12 @@ export interface StatItem {
 }
 
 export interface StatsSectionData {
-  tag: string;
   title: string;
   description: string;
   stats: StatItem[];
 }
 
 export const statsData: StatsSectionData = {
-  tag: "Skala Operasional & Keunggulan Industri",
   title: "Kekuatan Produksi Terintegrasi Skala Global",
   description: "Fasilitas mill terpadu di Sungai Baung, Ogan Komering Ilir, memadukan inovasi teknik mutakhir dengan sirkularitas energi hijau.",
   
