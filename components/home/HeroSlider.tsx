@@ -4,9 +4,9 @@ import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { ChevronLeft, ChevronRight, ArrowRight, ArrowUpRight, Calendar, Sparkles } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 
-import { HERO_SLIDES, HERO_CONFIG, HeroSlide } from "@/data";
+import { HERO_SLIDES, HERO_CONFIG } from "@/data";
 
 export default function HeroSlider() {
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -106,7 +106,6 @@ export default function HeroSlider() {
               {/* Date Badge */}
               <div className="flex items-center gap-3 flex-wrap">
                 <span className="flex items-center gap-1.5 text-xs font-semibold tracking-wider text-white/80 uppercase">
-                  <Calendar className="w-3.5 h-3.5 text-[#FF4D5E]" />
                   {activeSlide.date}
                 </span>
               </div>

@@ -89,7 +89,7 @@ export default function ProductCards() {
                 <div className="pt-3 border-t border-neutral-100 flex items-center justify-between">
                   <button
                     onClick={() => setSelectedProduct(product)}
-                    className="w-full inline-flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#D91A2A] group-hover:text-[#B31221] py-2 px-3 rounded-lg bg-red-50/60 hover:bg-[#D91A2A] hover:text-white transition-all duration-200"
+                    className="w-full inline-flex items-center justify-between text-xs font-bold uppercase tracking-wider text-white py-2 px-3 rounded-lg bg-[#D91A2A] hover:bg-[#B31221] transition-all duration-200"
                   >
                     <span>Read More</span>
                     <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
