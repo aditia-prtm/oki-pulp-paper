@@ -35,6 +35,16 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [mobileMenuOpen]);
+
   return (
     <header className="fixed font-montserrat top-0 left-0 right-0 z-50 transition-all duration-300">
       {/* Top Red Utility Bar (Matching OKI & Corporate Brand Style) */}
@@ -199,70 +209,98 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Backdrop */}
       <div 
-        className={`lg:hidden absolute top-full left-0 right-0 bg-white/98 border-b border-neutral-200 px-6 py-6 shadow-2xl max-h-[85vh] overflow-y-auto transition-all duration-300 ${
-          mobileMenuOpen 
-            ? 'translate-x-0 opacity-100 pointer-events-auto visible' 
-            : 'translate-x-full opacity-0 pointer-events-none invisible'
+        className={`lg:hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-40 transition-opacity duration-300 ${
+          mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={() => setMobileMenuOpen(false)}
+        aria-hidden="true"
+      />
+
+      {/* Mobile Right Drawer (75% Width, Right-Aligned) */}
+      <div 
+        className={`lg:hidden fixed top-0 right-0 bottom-0 w-[75%] max-w-sm bg-white z-50 shadow-2xl flex flex-col justify-between transition-transform duration-300 ease-in-out border-l border-neutral-200 ${
+          mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-          <div className="space-y-4">
-            {navigation.map((item, idx) => (
-              <div key={idx} className="border-b border-neutral-100 pb-3">
-                <Link
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between text-base font-semibold text-neutral-800 hover:text-[#D91A2A]"
-                >
-                  <span>{item.name}</span>
-                  <ChevronRight className="w-4 h-4 text-neutral-400" />
-                </Link>
-                {item.dropdown && (
-                  <div className="mt-2 pl-3 space-y-1.5 border-l-2 border-neutral-100">
-                    {item.dropdown.map((sub, sIdx) => (
-                      <Link
-                        key={sIdx}
-                        href={item.href}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="block text-xs text-neutral-500 hover:text-[#D91A2A] py-1"
-                      >
-                        {sub}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+        {/* Drawer Header */}
+        <div className="flex items-center justify-between px-5 py-4 border-b border-neutral-100 bg-neutral-50/50">
+          <div className="relative w-36 h-8">
+            <Image
+              src={logo.src}
+              alt={logo.alt}
+              fill
+              className="object-contain object-left"
+            />
+          </div>
+          <button
+            onClick={() => setMobileMenuOpen(false)}
+            className="p-2 rounded-lg text-neutral-600 hover:text-[#D91A2A] hover:bg-neutral-100 focus:outline-none transition-colors"
+            aria-label="Tutup Menu"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
 
-            <div className="pt-4 flex flex-col gap-3">
+        {/* Drawer Navigation List */}
+        <div className="flex-1 overflow-y-auto px-5 py-5 space-y-4 overscroll-contain">
+          {navigation.map((item, idx) => (
+            <div key={idx} className="border-b border-neutral-100 pb-3 last:border-0">
               <Link
-                href="#products"
+                href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full text-center bg-[#D91A2A] text-white py-3 rounded-xl font-semibold text-sm shadow-md"
+                className="flex items-center justify-between text-base font-semibold text-neutral-800 hover:text-[#D91A2A] py-1"
               >
-                Lihat Produk & Spesifikasi
+                <span>{item.name}</span>
+                <ChevronRight className="w-4 h-4 text-neutral-400" />
               </Link>
-              
-              <div className="flex items-center justify-between px-2 pt-2 text-xs text-neutral-500">
-                <span>Pilihan Bahasa:</span>
-                <div className="flex gap-2">
-                  <button 
-                    onClick={() => setCurrentLang("ID")} 
-                    className={`px-2.5 py-1 rounded ${currentLang === "ID" ? "bg-[#D91A2A] text-white font-bold" : "bg-neutral-100"}`}
-                  >
-                    ID
-                  </button>
-                  <button 
-                    onClick={() => setCurrentLang("EN")} 
-                    className={`px-2.5 py-1 rounded ${currentLang === "EN" ? "bg-[#D91A2A] text-white font-bold" : "bg-neutral-100"}`}
-                  >
-                    EN
-                  </button>
+              {item.dropdown && (
+                <div className="mt-2 pl-3 space-y-1.5 border-l-2 border-neutral-100">
+                  {item.dropdown.map((sub, sIdx) => (
+                    <Link
+                      key={sIdx}
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block text-xs text-neutral-600 hover:text-[#D91A2A] py-1 transition-colors"
+                    >
+                      {sub}
+                    </Link>
+                  ))}
                 </div>
-              </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Drawer Footer Actions */}
+        <div className="p-5 border-t border-neutral-100 bg-neutral-50/60 space-y-3">
+          <Link
+            href="#products"
+            onClick={() => setMobileMenuOpen(false)}
+            className="w-full block text-center bg-[#D91A2A] hover:bg-[#B31221] text-white py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider shadow-md transition-colors"
+          >
+            Lihat Produk & Spesifikasi
+          </Link>
+          
+          <div className="flex items-center justify-between px-1 text-xs text-neutral-500">
+            <span className="font-medium">Bahasa:</span>
+            <div className="flex gap-1.5">
+              <button 
+                onClick={() => setCurrentLang("ID")} 
+                className={`px-2.5 py-1 rounded text-xs transition-colors ${currentLang === "ID" ? "bg-[#D91A2A] text-white font-bold" : "bg-white border border-neutral-200 text-neutral-700"}`}
+              >
+                ID
+              </button>
+              <button 
+                onClick={() => setCurrentLang("EN")} 
+                className={`px-2.5 py-1 rounded text-xs transition-colors ${currentLang === "EN" ? "bg-[#D91A2A] text-white font-bold" : "bg-white border border-neutral-200 text-neutral-700"}`}
+              >
+                EN
+              </button>
             </div>
           </div>
+        </div>
       </div>
     </header>
   );
