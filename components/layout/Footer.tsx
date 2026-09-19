@@ -157,16 +157,17 @@ export default function Footer() {
 
           <div className="flex items-center gap-6">
             {footerLinks.legalLinks.map((legal, idx) => (
-              <a key={idx} href={legal.href} className="hover:text-neutral-300 transition-colors">
+              <a key={idx} href={legal.href} className="hover:text-neutral-300 transition-colors py-1">
                 {legal.name}
               </a>
             ))}
             <button
+              type="button"
               onClick={scrollToTop}
-              className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#D91A2A] text-white flex items-center justify-center transition-all duration-300"
+              className="w-11 h-11 sm:w-10 sm:h-10 rounded-full bg-white/10 hover:bg-[#D91A2A] active:bg-[#B31221] text-white flex items-center justify-center transition-all duration-300 cursor-pointer touch-manipulation shadow-sm"
               aria-label="Kembali ke atas"
             >
-              <ArrowUp className="w-4 h-4" />
+              <ArrowUp className="w-5 h-5 sm:w-4 sm:h-4" />
             </button>
           </div>
         </div>
