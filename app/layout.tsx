@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
-  variable: "--font-plus-jakarta-sans",
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
 });
 
 const montserratSemiBold = localFont({
@@ -31,8 +32,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id" className={`${plusJakartaSans.variable} ${montserratSemiBold.variable} scroll-smooth antialiased`}>
-      <body className="min-h-screen bg-[#FCFCFA] text-[#1E232A] font-sans flex flex-col selection:bg-[#E31837] selection:text-white">
+    <html lang="id" className={`${montserrat.variable} ${montserratSemiBold.variable} scroll-smooth antialiased`}>
+      <body className="min-h-screen bg-oki-warm-bg text-oki-charcoal font-sans flex flex-col selection:bg-[#E31837] selection:text-white">
         {children}
       </body>
     </html>
