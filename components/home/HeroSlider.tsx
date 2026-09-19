@@ -141,8 +141,8 @@ export default function HeroSlider() {
                 </span>
               </div>
 
-              {/* Editorial Title (Copper Gold Style) */}
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight md:leading-[1.18] tracking-tight drop-shadow-md">
+              {/* Editorial Title */}
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-tight md:leading-[1.18] tracking-tight drop-shadow-md">
                 {activeSlide.title}
               </h1>
 
@@ -170,22 +170,22 @@ export default function HeroSlider() {
         </motion.div>
 
         {/* Navigation Controls: Arrows, Progress & Pagination */}
-        <div className="mt-8 pt-6 border-t border-white/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative z-20">
+        <div className="mt-8 pt-6 border-t border-white/15 flex items-center justify-between gap-3 sm:gap-4 relative z-20">
           {/* Progress Indicators */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-3">
             {HERO_SLIDES.map((slide, idx) => (
               <button
                 key={slide.id}
                 type="button"
                 onClick={() => setCurrentIdx(idx)}
                 aria-label={`Pindah ke slide ${idx + 1}`}
-                className="group py-3 px-1 focus:outline-none flex items-center cursor-pointer"
+                className="group py-2 sm:py-3 px-0.5 sm:px-1 focus:outline-none flex items-center cursor-pointer"
               >
                 <div 
-                  className={`h-2 rounded-full transition-all duration-500 relative overflow-hidden ${
+                  className={`h-1.5 sm:h-2 rounded-full transition-all duration-500 relative overflow-hidden ${
                     currentIdx === idx 
-                      ? "w-12 sm:w-16 bg-[#D91A2A]" 
-                      : "w-6 sm:w-8 bg-white/30 group-hover:bg-white/50"
+                      ? "w-8 sm:w-16 bg-[#D91A2A]" 
+                      : "w-4 sm:w-8 bg-white/30 group-hover:bg-white/50"
                   }`}
                 >
                   {currentIdx === idx && !isPaused && (
@@ -199,18 +199,18 @@ export default function HeroSlider() {
                 </div>
               </button>
             ))}
-            <span className="text-xs font-semibold text-white/70 ml-2 tracking-wider">
+            <span className="text-[11px] sm:text-xs font-semibold text-white/70 ml-1.5 sm:ml-2 tracking-wider whitespace-nowrap">
               0{currentIdx + 1} <span className="text-white/30">/</span> 0{HERO_SLIDES.length}
             </span>
           </div>
 
-          {/* Left / Right Nav Arrows */}
-          <div className="flex items-center gap-3">
+          {/* Left / Right Nav Arrows (Positioned to the Right) */}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <button
               type="button"
               onClick={handlePrev}
               aria-label="Slide sebelumnya"
-              className="w-11 h-11 sm:w-10 sm:h-10 rounded-full border border-white/25 bg-black/40 backdrop-blur-md text-white flex items-center justify-center hover:bg-[#D91A2A] hover:border-[#D91A2A] active:scale-95 transition-all duration-200 cursor-pointer"
+              className="w-10 h-10 sm:w-10 sm:h-10 rounded-full border border-white/25 bg-black/40 backdrop-blur-md text-white flex items-center justify-center hover:bg-[#D91A2A] hover:border-[#D91A2A] active:scale-95 transition-all duration-200 cursor-pointer"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
@@ -218,7 +218,7 @@ export default function HeroSlider() {
               type="button"
               onClick={handleNext}
               aria-label="Slide berikutnya"
-              className="w-11 h-11 sm:w-10 sm:h-10 rounded-full border border-white/25 bg-black/40 backdrop-blur-md text-white flex items-center justify-center hover:bg-[#D91A2A] hover:border-[#D91A2A] active:scale-95 transition-all duration-200 cursor-pointer"
+              className="w-10 h-10 sm:w-10 sm:h-10 rounded-full border border-white/25 bg-black/40 backdrop-blur-md text-white flex items-center justify-center hover:bg-[#D91A2A] hover:border-[#D91A2A] active:scale-95 transition-all duration-200 cursor-pointer"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
