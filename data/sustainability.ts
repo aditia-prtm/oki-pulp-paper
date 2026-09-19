@@ -39,7 +39,7 @@ export const sustainabilityData: SustainabilityData = {
   description: "Keberlanjutan bukan sekadar target operasional bagi PT OKI Pulp & Paper Mills, melainkan fondasi integritas dalam setiap lembar serat dan kertas yang kami ciptakan.",
   
   heroImage: {
-    src: "/images/hero/sustainability-hero.jpg",
+    src: "/images/hero/news2.jpg",
     alt: "OKI Sustainable Forestry & Mill",
     badge: "Inisiatif Hijau APP Group",
     caption: "Menjaga Keseimbangan Ekosistem & Pertumbuhan Ekonomi Berkelanjutan",
