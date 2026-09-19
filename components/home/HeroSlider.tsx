@@ -12,6 +12,11 @@ export default function HeroSlider() {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+
+  // Minimum swipe distance in px
+  const minSwipeDistance = 50;
 
   // Parallax Scroll Effect
   const { scrollY } = useScroll();
@@ -36,6 +41,29 @@ export default function HeroSlider() {
     setCurrentIdx((prev) => (prev + 1) % HERO_SLIDES.length);
   };
 
+  // Touch Swipe Handlers for Mobile
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchEndX.current = null;
+    touchStartX.current = e.targetTouches[0].clientX;
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return;
+    const distance = touchStartX.current - touchEndX.current;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      handleNext();
+    } else if (isRightSwipe) {
+      handlePrev();
+    }
+  };
+
   const activeSlide = HERO_SLIDES[currentIdx];
 
   return (
@@ -45,11 +73,14 @@ export default function HeroSlider() {
       className="relative w-full h-[88vh] min-h-[620px] max-h-[920px] overflow-hidden bg-[#12161A]"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
     >
       {/* Background Images with Scale-in and Parallax */}
       <motion.div 
         style={{ y: yBg }} 
-        className="absolute inset-0 w-full h-[120%] -top-[10%]"
+        className="absolute inset-0 w-full h-[120%] -top-[10%] pointer-events-none"
       >
         <AnimatePresence mode="wait">
           <motion.div
@@ -67,7 +98,7 @@ export default function HeroSlider() {
               opacity: 0, 
               transition: { duration: 0.9, ease: "easeInOut" } 
             }}
-            className="absolute inset-0 w-full h-full"
+            className="absolute inset-0 w-full h-full pointer-events-none"
           >
             <Image
               src={activeSlide.image}
@@ -82,14 +113,14 @@ export default function HeroSlider() {
       </motion.div>
 
       {/* Modern Gradient Overlays for Readability & Cinematic Look */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/30 z-10" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/30 to-transparent z-10" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/30 z-10 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/30 to-transparent z-10 pointer-events-none" />
 
       {/* Top Red Ambient Accent Line */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#D91A2A] via-[#FF4D5E] to-transparent z-30" />
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#D91A2A] via-[#FF4D5E] to-transparent z-30 pointer-events-none" />
 
       {/* Main Content Area */}
-      <div className="relative z-20 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-end pb-16 sm:pb-20 md:pb-24">
+      <div className="relative z-20 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-end pb-16 sm:pb-20 md:pb-24 pointer-events-auto">
         <motion.div 
           style={{ opacity: opacityText }}
           className="max-w-3xl"
@@ -124,7 +155,7 @@ export default function HeroSlider() {
               <div className="pt-2">
                 <Link
                   href={activeSlide.link}
-                  className="group inline-flex items-center gap-3 text-sm font-semibold tracking-wide text-white hover:text-[#FF4D5E] transition-all"
+                  className="group inline-flex items-center gap-3 text-sm font-semibold tracking-wide text-white hover:text-[#FF4D5E] transition-all relative z-20"
                 >
                   <span className="w-10 h-10 rounded-full border border-white/40 flex items-center justify-center group-hover:border-[#FF4D5E] group-hover:bg-[#D91A2A] transition-all duration-300 transform group-hover:scale-110">
                     <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-0.5 transition-transform" />
@@ -138,22 +169,23 @@ export default function HeroSlider() {
           </AnimatePresence>
         </motion.div>
 
-        {/* Navigation Controls: Arrows, Progress & Pagination (Positioned Elegantly at Bottom Right / Center) */}
-        <div className="mt-8 pt-6 border-t border-white/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        {/* Navigation Controls: Arrows, Progress & Pagination */}
+        <div className="mt-8 pt-6 border-t border-white/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative z-20">
           {/* Progress Indicators */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             {HERO_SLIDES.map((slide, idx) => (
               <button
                 key={slide.id}
+                type="button"
                 onClick={() => setCurrentIdx(idx)}
                 aria-label={`Pindah ke slide ${idx + 1}`}
-                className="group py-2 focus:outline-none"
+                className="group py-3 px-1 focus:outline-none flex items-center cursor-pointer"
               >
                 <div 
-                  className={`h-1.5 rounded-full transition-all duration-500 relative overflow-hidden ${
+                  className={`h-2 rounded-full transition-all duration-500 relative overflow-hidden ${
                     currentIdx === idx 
                       ? "w-12 sm:w-16 bg-[#D91A2A]" 
-                      : "w-6 sm:w-8 bg-white/30 hover:bg-white/50"
+                      : "w-6 sm:w-8 bg-white/30 group-hover:bg-white/50"
                   }`}
                 >
                   {currentIdx === idx && !isPaused && (
@@ -172,19 +204,21 @@ export default function HeroSlider() {
             </span>
           </div>
 
-          {/* Left / Right Nav Arrows (Copper Gold Style) */}
-          <div className="flex items-center gap-2">
+          {/* Left / Right Nav Arrows */}
+          <div className="flex items-center gap-3">
             <button
+              type="button"
               onClick={handlePrev}
               aria-label="Slide sebelumnya"
-              className="w-10 h-10 rounded-full border border-white/25 bg-black/30 backdrop-blur-md text-white flex items-center justify-center hover:bg-[#D91A2A] hover:border-[#D91A2A] transition-all duration-300"
+              className="w-11 h-11 sm:w-10 sm:h-10 rounded-full border border-white/25 bg-black/40 backdrop-blur-md text-white flex items-center justify-center hover:bg-[#D91A2A] hover:border-[#D91A2A] active:scale-95 transition-all duration-200 cursor-pointer"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button
+              type="button"
               onClick={handleNext}
               aria-label="Slide berikutnya"
-              className="w-10 h-10 rounded-full border border-white/25 bg-black/30 backdrop-blur-md text-white flex items-center justify-center hover:bg-[#D91A2A] hover:border-[#D91A2A] transition-all duration-300"
+              className="w-11 h-11 sm:w-10 sm:h-10 rounded-full border border-white/25 bg-black/40 backdrop-blur-md text-white flex items-center justify-center hover:bg-[#D91A2A] hover:border-[#D91A2A] active:scale-95 transition-all duration-200 cursor-pointer"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
