@@ -203,8 +203,8 @@ export default function Header() {
       <div 
         className={`lg:hidden absolute top-full left-0 right-0 bg-white/98 border-b border-neutral-200 px-6 py-6 shadow-2xl max-h-[85vh] overflow-y-auto transition-all duration-300 ${
           mobileMenuOpen 
-            ? 'translate-y-0 opacity-100 pointer-events-auto visible' 
-            : '-translate-y-2 opacity-0 pointer-events-none invisible'
+            ? 'translate-x-0 opacity-100 pointer-events-auto visible' 
+            : 'translate-x-full opacity-0 pointer-events-none invisible'
         }`}
       >
           <div className="space-y-4">
