@@ -122,32 +122,5 @@ export const productsData: ProductsSectionData = {
       ],
       certifications: ["FDA Approved", "BfR XXXVI Recommendation", "PEFC", "ISO 9001", "RoHS"],
     },
-    {
-      id: "specialty-paper",
-      name: "Specialty & High-Brightness Printing Paper",
-      category: "PRINTING & PUBLISHING",
-      tagline: "Kertas cetak dan tulis dengan opasitas prima, kontras tajam, dan performa tinggi pada mesin percetakan modern.",
-      description: "Diformulasikan khusus untuk percetakan offset komersial, buku teks, dan kertas dokumen berkekuatan tinggi. Memberikan kejernihan teks, presisi warna luar biasa, dan tidak tembus tinta pada kedua sisi kertas.",
-      image: "/images/products/specialty-paper.jpg",
-      features: [
-        "Formasi serat rapat dengan opasitas tinggi (tidak tembus pandang)",
-        "Permukaan halus (Smoothness) untuk efisiensi transfer tinta cetak",
-        "Stabilitas dimensi sangat tinggi untuk pencetakan multi-warna cepat",
-        "Bebas asam (Acid-free) untuk umur simpan arsip jangka panjang",
-      ],
-      specs: [
-        { label: "Gramatur Kertas", value: "60, 70, 80, 100 gsm" },
-        { label: "Brightness", value: "98% - 104% ISO" },
-        { label: "Opasitas", value: "> 94%" },
-        { label: "Format", value: "Sheets (Lembaran) & Rolls (Gulungan)" },
-      ],
-      applications: [
-        "Buku literatur, ensiklopedia & novel berkualitas",
-        "Majalah, brosur korporat, dan company profile",
-        "Kertas formulir bisnis & continuous form",
-        "Amplop, map, dan security paper stationery",
-      ],
-      certifications: ["ISO 9706 (Permanent Paper)", "PEFC", "SVLK", "ISO 14001"],
-    },
   ],
 };
