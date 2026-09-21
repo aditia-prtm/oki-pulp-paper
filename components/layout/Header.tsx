@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   Globe, 
   ChevronDown, 
@@ -10,8 +11,7 @@ import {
   Menu, 
   X, 
   PhoneCall, 
-  ArrowUpRight,
-  ChevronRight
+  ArrowUpRight
 } from "lucide-react";
 import { siteConfig } from "@/data";
 
@@ -20,8 +20,15 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const [currentLang, setCurrentLang] = useState<"ID" | "EN">("ID");
+  const [expandedMenus, setExpandedMenus] = useState<number[]>([]);
 
   const { navigation, topBar, logo } = siteConfig;
+
+  const toggleMenu = (idx: number) => {
+    setExpandedMenus((prev) =>
+      prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
+    );
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -218,15 +225,15 @@ export default function Header() {
         aria-hidden="true"
       />
 
-      {/* Mobile Right Drawer (75% Width, Right-Aligned) */}
+      {/* Mobile Right Drawer (Warm Cream Aesthetic Matching Reference) */}
       <div 
-        className={`lg:hidden fixed top-0 right-0 bottom-0 w-[75%] max-w-sm bg-white z-50 shadow-2xl flex flex-col justify-between transition-transform duration-300 ease-in-out border-l border-neutral-200 ${
+        className={`lg:hidden fixed top-0 right-0 bottom-0 w-[85%] max-w-sm bg-[#FAF7F2] z-50 shadow-2xl flex flex-col justify-between transition-transform duration-300 ease-in-out border-l border-neutral-200/60 ${
           mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        {/* Drawer Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-neutral-100 bg-neutral-50/50">
-          <div className="relative w-36 h-8">
+        {/* Drawer Header with Close Button */}
+        <div className="flex items-center justify-between px-6 pt-6 pb-2">
+          <div className="relative w-32 h-7">
             <Image
               src={logo.src}
               alt={logo.alt}
@@ -236,70 +243,108 @@ export default function Header() {
           </div>
           <button
             onClick={() => setMobileMenuOpen(false)}
-            className="p-2 rounded-lg text-neutral-600 hover:text-[#D91A2A] hover:bg-neutral-100 focus:outline-none transition-colors"
+            className="w-10 h-10 rounded-full border border-neutral-300/60 bg-white/50 hover:bg-white flex items-center justify-center text-neutral-500 hover:text-neutral-900 focus:outline-none transition-colors cursor-pointer shadow-xs"
             aria-label="Tutup Menu"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Drawer Navigation List */}
-        <div className="flex-1 overflow-y-auto px-5 py-5 space-y-4 overscroll-contain">
-          {navigation.map((item, idx) => (
-            <div key={idx} className="border-b border-neutral-100 pb-3 last:border-0">
-              <Link
-                href={item.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between text-base font-semibold text-neutral-800 hover:text-[#D91A2A] py-1"
-              >
-                <span>{item.name}</span>
-                <ChevronRight className="w-4 h-4 text-neutral-400" />
-              </Link>
-              {item.dropdown && (
-                <div className="mt-2 pl-3 space-y-1.5 border-l-2 border-neutral-100">
-                  {item.dropdown.map((sub, sIdx) => (
-                    <Link
-                      key={sIdx}
-                      href={item.href}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="block text-xs text-neutral-600 hover:text-[#D91A2A] py-1 transition-colors"
+        {/* Drawer Navigation List with Accordion Sub-menus */}
+        <div className="flex-1 overflow-y-auto px-6 sm:px-8 py-5 space-y-4 overscroll-contain">
+          {navigation.map((item, idx) => {
+            const hasSubmenu = Boolean(item.dropdown && item.dropdown.length > 0);
+            const isExpanded = expandedMenus.includes(idx);
+
+            return (
+              <div key={idx} className="transition-colors">
+                <div className="flex items-center justify-between py-1">
+                  <Link
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-[17px] sm:text-[18px] text-neutral-800 hover:text-[#D91A2A] transition-colors font-normal tracking-tight"
+                  >
+                    {item.name}
+                  </Link>
+
+                  {hasSubmenu && (
+                    <button
+                      type="button"
+                      onClick={() => toggleMenu(idx)}
+                      aria-label={`Toggle sub menu ${item.name}`}
+                      aria-expanded={isExpanded}
+                      className="w-9 h-9 sm:w-10 sm:h-10 rounded-[6px] bg-[#EDE8DE] hover:bg-[#E2DDD3] active:bg-[#D7D1C5] flex items-center justify-center transition-colors cursor-pointer text-neutral-800"
                     >
-                      {sub}
-                    </Link>
-                  ))}
+                      <ChevronDown
+                        className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-200 ${
+                          isExpanded ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+                  )}
                 </div>
-              )}
-            </div>
-          ))}
+
+                {/* Animated Dropdown Submenu */}
+                <AnimatePresence initial={false}>
+                  {hasSubmenu && isExpanded && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.25, ease: "easeInOut" }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pt-3 pb-2 pl-2 space-y-3.5">
+                        {item.dropdown!.map((sub, sIdx) => (
+                          <Link
+                            key={sIdx}
+                            href={item.href}
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="block text-[14.5px] text-neutral-700 hover:text-[#D91A2A] transition-colors leading-relaxed font-normal"
+                          >
+                            {sub}
+                          </Link>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
+
+          {/* Language Switcher (ID EN) */}
+          <div className="flex items-center gap-4 text-[16px] pt-8 pb-4 text-neutral-800 border-t border-neutral-200/60 mt-4">
+            <button
+              type="button"
+              onClick={() => setCurrentLang("ID")}
+              className={`transition-colors cursor-pointer ${
+                currentLang === "ID" ? "font-bold text-neutral-900" : "font-normal text-neutral-500 hover:text-neutral-800"
+              }`}
+            >
+              ID
+            </button>
+            <button
+              type="button"
+              onClick={() => setCurrentLang("EN")}
+              className={`transition-colors cursor-pointer ${
+                currentLang === "EN" ? "font-bold text-neutral-900" : "font-normal text-neutral-500 hover:text-neutral-800"
+              }`}
+            >
+              EN
+            </button>
+          </div>
         </div>
 
-        {/* Drawer Footer Actions */}
-        <div className="p-5 border-t border-neutral-100 bg-neutral-50/60 space-y-3">
+        {/* Drawer Footer CTA */}
+        <div className="p-6 border-t border-neutral-200/60 bg-[#FAF7F2]">
           <Link
             href="#products"
             onClick={() => setMobileMenuOpen(false)}
-            className="w-full block text-center bg-[#D91A2A] hover:bg-[#B31221] text-white py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider shadow-md transition-colors"
+            className="w-full block text-center bg-[#D91A2A] hover:bg-[#B31221] text-white py-3 rounded-xl font-semibold text-xs uppercase tracking-wider shadow-md transition-colors"
           >
-            Lihat Produk & Spesifikasi
+            Katalog Produk & Spesifikasi
           </Link>
-          
-          <div className="flex items-center justify-between px-1 text-xs text-neutral-500">
-            <span className="font-medium">Bahasa:</span>
-            <div className="flex gap-1.5">
-              <button 
-                onClick={() => setCurrentLang("ID")} 
-                className={`px-2.5 py-1 rounded text-xs transition-colors ${currentLang === "ID" ? "bg-[#D91A2A] text-white font-bold" : "bg-white border border-neutral-200 text-neutral-700"}`}
-              >
-                ID
-              </button>
-              <button 
-                onClick={() => setCurrentLang("EN")} 
-                className={`px-2.5 py-1 rounded text-xs transition-colors ${currentLang === "EN" ? "bg-[#D91A2A] text-white font-bold" : "bg-white border border-neutral-200 text-neutral-700"}`}
-              >
-                EN
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </header>
