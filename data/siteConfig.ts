@@ -19,6 +19,10 @@ export interface SiteConfig {
     src: string;
     alt: string;
   };
+  logoWhite?: {
+    src: string;
+    alt: string;
+  };
   navigation: NavLink[];
   topBar: {
     announcement: string;
@@ -53,6 +57,10 @@ export const siteConfig: SiteConfig = {
   companyName: "PT OKI Pulp & Paper Mills",
   companySubtitle: "APP Group",
   logo: {
+    src: "/images/logo/logo_OKI.svg",
+    alt: "PT OKI Pulp & Paper Mills",
+  },
+  logoWhite: {
     src: "/images/logo/logo_OKI_white.svg",
     alt: "PT OKI Pulp & Paper Mills",
   },

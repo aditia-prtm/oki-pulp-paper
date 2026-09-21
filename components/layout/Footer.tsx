@@ -17,7 +17,8 @@ import {
 import { siteConfig } from "@/data";
 
 export default function Footer() {
-  const { logo, contact, affiliations, certifications, footerLinks } = siteConfig;
+  const { logo, logoWhite, contact, affiliations, certifications, footerLinks } = siteConfig;
+  const footerLogo = logoWhite || logo;
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -34,8 +35,8 @@ export default function Footer() {
           <div className="lg:col-span-4 space-y-6">
             <div className="w-56 h-12 relative p-2.5">
               <Image
-                src={logo.src}
-                alt={logo.alt}
+                src={footerLogo.src}
+                alt={footerLogo.alt}
                 fill
                 className="object-contain object-left"
               />
