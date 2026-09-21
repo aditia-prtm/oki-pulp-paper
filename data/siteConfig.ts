@@ -53,7 +53,7 @@ export const siteConfig: SiteConfig = {
   companyName: "PT OKI Pulp & Paper Mills",
   companySubtitle: "APP Group",
   logo: {
-    src: "/images/logo/logo_OKI.svg",
+    src: "/images/logo/logo_OKI_white.svg",
     alt: "PT OKI Pulp & Paper Mills",
   },
   

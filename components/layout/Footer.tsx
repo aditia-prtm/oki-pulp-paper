@@ -32,12 +32,12 @@ export default function Footer() {
           
           {/* Col 1: Brand & Overview (4 cols) */}
           <div className="lg:col-span-4 space-y-6">
-            <div className="w-56 h-12 relative bg-white/95 rounded-lg p-2.5">
+            <div className="w-56 h-12 relative p-2.5">
               <Image
                 src={logo.src}
                 alt={logo.alt}
                 fill
-                className="object-contain object-left px-2"
+                className="object-contain object-left"
               />
             </div>
             

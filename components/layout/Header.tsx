@@ -179,22 +179,14 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Right Action CTA & Search */}
+          {/* Search */}
           <div className="hidden lg:flex items-center space-x-4">
             <button 
               aria-label="Pencarian" 
               className="p-2 rounded-full text-neutral-600 hover:text-[#D91A2A] hover:bg-neutral-100 transition-colors"
             >
-              <Search className="w-4 h-4" />
+              <Search strokeWidth={3} className="w-4 h-4" />
             </button>
-
-            <Link
-              href="#products"
-              className="inline-flex items-center gap-2 bg-[#D91A2A] hover:bg-[#B31221] text-white text-xs font-semibold uppercase tracking-wider px-4 py-2.5 rounded-lg shadow-sm transition-all transform hover:-translate-y-0.5 active:translate-y-0"
-            >
-              <span>Katalog Produk</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </Link>
           </div>
 
           {/* Mobile Menu Toggle Button */}
@@ -334,17 +326,6 @@ export default function Header() {
               EN
             </button>
           </div>
-        </div>
-
-        {/* Drawer Footer CTA */}
-        <div className="p-6 border-t border-neutral-200/60 bg-[#FAF7F2]">
-          <Link
-            href="#products"
-            onClick={() => setMobileMenuOpen(false)}
-            className="w-full block text-center bg-[#D91A2A] hover:bg-[#B31221] text-white py-3 rounded-xl font-semibold text-xs uppercase tracking-wider shadow-md transition-colors"
-          >
-            Katalog Produk & Spesifikasi
-          </Link>
         </div>
       </div>
     </header>
