@@ -36,7 +36,7 @@ export default function StatsSection() {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat, idx) => {
             const Icon = iconMap[stat.iconName] || Factory;
             return (
@@ -48,7 +48,7 @@ export default function StatsSection() {
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
                 className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-sm hover:border-[#D91A2A]/50 hover:bg-white/[0.08] transition-all duration-300 group"
               >
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#D91A2A] to-[#B31221] flex items-center justify-center text-white mb-6 shadow-lg group-hover:scale-110 transition-transform">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#D91A2A] to-[#B31221] hidden md:flex items-center justify-center text-white mb-6 shadow-lg group-hover:scale-110 transition-transform">
                   <Icon className="w-6 h-6" />
                 </div>
                 
