@@ -202,7 +202,7 @@ export default function Header() {
               className="p-2 rounded-lg text-neutral-700 hover:text-[#D91A2A] hover:bg-neutral-100 focus:outline-none"
               aria-label="Toggle Menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              <Menu className="w-6 h-6" />
             </button>
           </div>
         </div>
