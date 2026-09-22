@@ -10,7 +10,6 @@ import { HERO_SLIDES, HERO_CONFIG } from "@/data";
 
 export default function HeroSlider() {
   const [currentIdx, setCurrentIdx] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
@@ -25,13 +24,12 @@ export default function HeroSlider() {
 
   // Auto slide effect
   useEffect(() => {
-    if (isPaused) return;
     const timer = setInterval(() => {
       setCurrentIdx((prev) => (prev + 1) % HERO_SLIDES.length);
     }, HERO_CONFIG.autoPlayInterval);
 
     return () => clearInterval(timer);
-  }, [isPaused, currentIdx]);
+  }, [currentIdx]);
 
   const handlePrev = () => {
     setCurrentIdx((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
@@ -71,8 +69,6 @@ export default function HeroSlider() {
       id="hero"
       ref={containerRef}
       className="relative w-full h-[88vh] min-h-[620px] max-h-[920px] overflow-hidden bg-[#12161A]"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
@@ -115,9 +111,6 @@ export default function HeroSlider() {
       {/* Modern Gradient Overlays for Readability & Cinematic Look */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/30 z-10 pointer-events-none" />
       <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/30 to-transparent z-10 pointer-events-none" />
-
-      {/* Top Red Ambient Accent Line */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#D91A2A] via-[#FF4D5E] to-transparent z-30 pointer-events-none" />
 
       {/* Main Content Area */}
       <div className="relative z-20 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-end pb-16 sm:pb-20 md:pb-24 pointer-events-auto">
@@ -188,8 +181,9 @@ export default function HeroSlider() {
                       : "w-4 sm:w-8 bg-white/30 group-hover:bg-white/50"
                   }`}
                 >
-                  {currentIdx === idx && !isPaused && (
+                  {currentIdx === idx && (
                     <motion.div
+                      key={`progress-${idx}-${currentIdx}`}
                       initial={{ width: "0%" }}
                       animate={{ width: "100%" }}
                       transition={{ duration: HERO_CONFIG.autoPlayInterval / 1000, ease: "linear" }}
