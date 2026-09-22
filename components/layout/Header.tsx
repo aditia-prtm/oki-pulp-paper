@@ -217,9 +217,9 @@ export default function Header() {
         aria-hidden="true"
       />
 
-      {/* Mobile Right Drawer (Warm Cream Aesthetic Matching Reference) */}
+      {/* Mobile Right Drawer */}
       <div 
-        className={`lg:hidden fixed top-0 right-0 bottom-0 w-[85%] max-w-sm bg-[#FAF7F2] z-50 shadow-2xl flex flex-col justify-between transition-transform duration-300 ease-in-out border-l border-neutral-200/60 ${
+        className={`lg:hidden fixed top-0 right-0 bottom-0 w-[85%] max-w-sm bg-white z-50 shadow-2xl flex flex-col justify-between transition-transform duration-300 ease-in-out border-l border-neutral-200/60 ${
           mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -235,7 +235,7 @@ export default function Header() {
           </div>
           <button
             onClick={() => setMobileMenuOpen(false)}
-            className="w-10 h-10 rounded-full border border-neutral-300/60 bg-white/50 hover:bg-white flex items-center justify-center text-neutral-500 hover:text-neutral-900 focus:outline-none transition-colors cursor-pointer shadow-xs"
+            className="w-10 h-10 rounded-lg border border-neutral-300/60 bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center text-neutral-500 hover:text-neutral-900 focus:outline-none transition-colors cursor-pointer shadow-xs"
             aria-label="Tutup Menu"
           >
             <X className="w-5 h-5" />
@@ -265,7 +265,7 @@ export default function Header() {
                       onClick={() => toggleMenu(idx)}
                       aria-label={`Toggle sub menu ${item.name}`}
                       aria-expanded={isExpanded}
-                      className="w-9 h-9 sm:w-10 sm:h-10 rounded-[6px] bg-[#EDE8DE] hover:bg-[#E2DDD3] active:bg-[#D7D1C5] flex items-center justify-center transition-colors cursor-pointer text-neutral-800"
+                      className="w-9 h-9 sm:w-10 sm:h-10 rounded-md bg-neutral-100 hover:bg-neutral-200 active:bg-neutral-300 flex items-center justify-center transition-colors cursor-pointer text-neutral-800"
                     >
                       <ChevronDown
                         className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-200 ${
