@@ -7,6 +7,7 @@ import StatsSection from "@/components/home/StatsSection";
 import SustainabilitySection from "@/components/home/SustainabilitySection";
 import NewsSection from "@/components/home/NewsSection";
 import Footer from "@/components/layout/Footer";
+import ScrollToTop from "@/components/layout/ScrollToTop";
 
 export default function Home() {
   return (
@@ -37,6 +38,9 @@ export default function Home() {
 
       {/* Corporate Footer */}
       <Footer />
+
+      {/* Scroll to Top Button */}
+      <ScrollToTop />
     </div>
   );
 }

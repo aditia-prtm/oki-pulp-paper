@@ -3,26 +3,21 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { 
-  MapPin, 
-  Phone, 
-  Mail, 
-  Globe, 
-  ArrowUp, 
-  ExternalLink, 
-  ShieldCheck, 
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Globe,
+  ExternalLink,
+  ShieldCheck,
   Award,
-  ChevronRight 
+  ChevronRight
 } from "lucide-react";
 import { siteConfig } from "@/data";
 
 export default function Footer() {
   const { logo, logoWhite, contact, affiliations, certifications, footerLinks } = siteConfig;
   const footerLogo = logoWhite || logo;
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
 
   return (
     <footer className="bg-[#12161A] text-white pt-16 pb-8 border-t border-neutral-800 relative">
@@ -150,7 +145,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Copyright & Back to Top */}
+        {/* Bottom Copyright */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
           <div>
             © {new Date().getFullYear()} PT OKI Pulp & Paper Mills. Hak Cipta Dilindungi Undang-Undang.
@@ -162,14 +157,6 @@ export default function Footer() {
                 {legal.name}
               </a>
             ))}
-            <button
-              type="button"
-              onClick={scrollToTop}
-              className="w-11 h-11 sm:w-10 sm:h-10 rounded-full bg-white/10 hover:bg-[#D91A2A] active:bg-[#B31221] text-white flex items-center justify-center transition-all duration-300 cursor-pointer touch-manipulation shadow-sm"
-              aria-label="Kembali ke atas"
-            >
-              <ArrowUp className="w-5 h-5 sm:w-4 sm:h-4" />
-            </button>
           </div>
         </div>
 

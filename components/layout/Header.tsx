@@ -265,7 +265,7 @@ export default function Header() {
                       onClick={() => toggleMenu(idx)}
                       aria-label={`Toggle sub menu ${item.name}`}
                       aria-expanded={isExpanded}
-                      className="w-9 h-9 sm:w-10 sm:h-10 rounded-md bg-neutral-100 hover:bg-neutral-200 active:bg-neutral-300 flex items-center justify-center transition-colors cursor-pointer text-neutral-800"
+                      className="w-9 h-9 sm:w-10 sm:h-10 rounded-md bg-neutral-100 hover:bg-neutral-200 active:bg-neutral-400 flex items-center justify-center transition-colors cursor-pointer text-neutral-800"
                     >
                       <ChevronDown
                         className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-200 ${
