@@ -16,7 +16,7 @@ export default function Home() {
       <Header />
 
       {/* Main Content Area */}
-      <main className="flex-grow pt-24 sm:pt-28">
+      <main className="flex-grow">
         {/* Hero Section with Parallax, Scale-in Smooth Zoom & News Carousel (without bottom floating boxes) */}
         <HeroSlider />
 
